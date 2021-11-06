@@ -48,7 +48,7 @@ jobs:
           echo "IPTVCAT_DATE_YESTERDAY=$(date -d "yesterday 13:00" '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "IPTVCAT_DOWNLOAD_DIR=${{ github.workspace }}/temp/iptvcat" >> $GITHUB_ENV
           echo "M3U8_DIR=./tests/" >> $GITHUB_ENV
-          echo "EPG_TEMP_DIR=${{ github.workspace }}/temp/epg" >> $GITHUB_ENV
+          echo "EPG_TEMP_DIR=./tests/epg/" >> $GITHUB_ENV
           echo "M3U8_STATIC_DIR=${{ github.workspace }}/temp/m3u8_static" >> $GITHUB_ENV
 
           # Update pythonpath used for our scripts
@@ -147,7 +147,7 @@ jobs:
       - name: Copy m3u8
         uses: canastro/copy-file-action@master
         with:
-          source: "${M3U8_DIR}/."
+          source: "./tests/."
           target: "./m3u8"
           flags: '-r'
           
@@ -155,7 +155,7 @@ jobs:
       - name: Copy epg
         uses: canastro/copy-file-action@master
         with:
-          source: "${EPG_TEMP_DIR}/."
+          source: "./tests/epg/."
           target: "./epg"
           flags: '-r'
     
