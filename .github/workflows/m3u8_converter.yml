@@ -151,3 +151,39 @@ jobs:
         run: |
           echo "Command: './scripts/upload_to_dropbox.sh "${M3U8_DIR}" "IPTV" "********"'"
           ./scripts/upload_to_dropbox.sh "${M3U8_DIR}" "IPTV" "${{ secrets.DROPBOX_UPLOAD_TOKEN }}"
+
+
+          
+      ### This is where the copy function should work, to copy the m3u8 & epg to the data folder ###
+      - name: Copy m3u8
+        uses: canastro/copy-file-action@master
+        with:
+          source: "${M3U8_DIR}/."
+          target: "./m3u8"
+          flags: '-r'
+          
+          
+      - name: Copy epg
+        uses: canastro/copy-file-action@master
+        with:
+          source: "${EPG_TEMP_DIR}/."
+          target: "./epg"
+          flags: '-r'
+    
+    
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
+                    
+      - name: Commit All Files
+        uses: zwaldowski/git-commit-action@v1
+        with:
+             commit_message: Updated by Bot - ${{ steps.date.outputs.date }}
+             working_directory: .
+           
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.scrapper_token }}
+          branch: ${{ github.ref }}
+          
