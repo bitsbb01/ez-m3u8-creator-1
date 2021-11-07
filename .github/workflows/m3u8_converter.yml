@@ -127,26 +127,26 @@ jobs:
         run: |
           echo "Command: 'ls -alt ${IPTVCAT_DOWNLOAD_DIR}'"
           ls -alt ${IPTVCAT_DOWNLOAD_DIR}
-          echo "Command: 'ls -alt ${M3U8_DIR}'"
-          ls -alt ${M3U8_DIR}
+          echo "Command: 'ls -alt ./tests/'"
+          ls -alt ./tests/
 
-          echo "Command: 'python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "${M3U8_DIR}"'"
-          python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "${M3U8_DIR}"
+          echo "Command: 'python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "./tests/"'"
+          python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "./tests/"
 
           echo "Command: 'ls -alt ${IPTVCAT_DOWNLOAD_DIR}'"
           ls -alt ${IPTVCAT_DOWNLOAD_DIR}
-          echo "Command: 'ls -alt ${M3U8_DIR}'"
-          ls -alt ${M3U8_DIR}
+          echo "Command: 'ls -alt ./tests/'"
+          ls -alt ./tests/
 
       - name: Merge with Static Files
         run: |
-          ls -alt ${M3U8_DIR}
+          ls -alt ./tests/
           ls -alt ${M3U8_STATIC_DIR}
 
           echo "Command: './scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR}"'"
           ./scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR}"
 
-          ls -alt ${M3U8_DIR}
+          ls -alt ./tests/
           ls -alt ${M3U8_STATIC_DIR}
 
       - name: Add Channel Categories
