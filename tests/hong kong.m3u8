@@ -1,7 +1,0 @@
-#EXTM3U tvg-url="./tests/epg/" url-tvg="./tests/epg/" x-tvg-url="./tests/epg/"
-#EXTINF:0 tvg-id="" group-title="",澳视葡文 [94]
-http://live4.tdm.com.mo:80/ch2/_definst_/ch2.live/playlist.m3u8?checkedby:iptvcat.com
-#EXTINF:0 tvg-id="" group-title="",香港开电视 / HKSTV-HKS [99]
-http://media.fantv.hk/m3u8/archive/channel2.m3u8?checkedby:iptvcat.com
-#EXTINF:0 tvg-id="" group-title="",香港开电视 / HKSTV-HKS, 香港開電視 [99]
-http://media.fantv.hk/m3u8/archive/channel2_stream1.m3u8?checkedby:iptvcat.com
