@@ -40,7 +40,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git rm ./tests/m3u8/*.m3u8
-          git rm ./tests/*.m3u8
           git rm ./m3u8/*.m3u8
                        
       - name: commit deleted old files
