@@ -5,7 +5,7 @@ on:
   # Run 4 Hours after https://https://github.com/ericziethen/ez-iptvcat-scraper
   # This should be just after midnight in Australia
   schedule:
-    - cron: "0 16 * * *"
+    - cron: "0 18 * * *"
   push:
     branches:
     - master
@@ -184,6 +184,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.FOR_GITHUB_TOOLS }}
+          github_token: ${{ secrets.scrapper_token }}
           branch: ${{ github.ref }}
           
