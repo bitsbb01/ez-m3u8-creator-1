@@ -1,0 +1,5 @@
+#EXTM3U tvg-url="./tests/epg/" url-tvg="./tests/epg/" x-tvg-url="./tests/epg/"
+#EXTINF:0 tvg-id="" group-title="",CNA (1080p) [Geo-blocked] [99]
+https://i.mjh.nz/au/Sydney/tv.cna.m3u8?checkedby:iptvcat.com
+#EXTINF:0 tvg-id="" group-title="",CNA HD [100]
+https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8?checkedby:iptvcat.com
