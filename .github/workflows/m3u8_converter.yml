@@ -61,22 +61,6 @@ jobs:
           git status
           git push          
           git commit -m "cron: Updated by Bot" -a
-         
-#      - name: If *.M3U8 Files exists - Then Cleanup 2
-#        if: steps.check_files.outputs.files_exists == 'true'
-#        # Only runs if all of the files exists
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.scrapper_token }}
-#          branch: ${{ github.ref }}
-#        
-#      - name: If *.M3U8 Files exists - Then Cleanup 3
-#        if: steps.check_files.outputs.files_exists == 'true'
-#        # Only runs if all of the files exists
-#        uses: zwaldowski/git-commit-action@v1
-#        with:
-#             commit_message: Updated by Bot - ${{ steps.date.outputs.date }}
-#             working_directory: .
         
       ### SETUP THE ENVIRONMENT
       - name: Setup Python
@@ -133,7 +117,7 @@ jobs:
           
           echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"'"
           ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"
-		  
+
       - name: Match EPG IDs to Static Files
         run: |
           echo "Command: './scripts/match_epgid_to_names.sh "${M3U8_STATIC_DIR}" "${M3U8_STATIC_DIR}"'"
