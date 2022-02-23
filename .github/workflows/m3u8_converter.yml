@@ -61,6 +61,22 @@ jobs:
           git status
           git push          
           git commit -m "cron: Updated by Bot" -a
+         
+#      - name: If *.M3U8 Files exists - Then Cleanup 2
+#        if: steps.check_files.outputs.files_exists == 'true'
+#        # Only runs if all of the files exists
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.scrapper_token }}
+#          branch: ${{ github.ref }}
+#        
+#      - name: If *.M3U8 Files exists - Then Cleanup 3
+#        if: steps.check_files.outputs.files_exists == 'true'
+#        # Only runs if all of the files exists
+#        uses: zwaldowski/git-commit-action@v1
+#        with:
+#             commit_message: Updated by Bot - ${{ steps.date.outputs.date }}
+#             working_directory: .
         
       ### SETUP THE ENVIRONMENT
       - name: Setup Python
@@ -117,7 +133,94 @@ jobs:
           
           echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"'"
           ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"
-
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/ca.m3u" "${M3U8_STATIC_DIR}" "ca.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/ca.m3u" "${M3U8_STATIC_DIR}" "ca.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/uk.m3u" "${M3U8_STATIC_DIR}" "uk.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/uk.m3u" "${M3U8_STATIC_DIR}" "uk.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/us.m3u" "${M3U8_STATIC_DIR}" "us.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/countries/us.m3u" "${M3U8_STATIC_DIR}" "us.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/unsorted.m3u" "${M3U8_STATIC_DIR}" "unsorted.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/unsorted.m3u" "${M3U8_STATIC_DIR}" "unsorted.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/uk_samsung.m3u" "${M3U8_STATIC_DIR}" "uk_samsung.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/uk_samsung.m3u" "${M3U8_STATIC_DIR}" "uk_samsung.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/uk_sportstribal.m3u" "${M3U8_STATIC_DIR}" "uk_sportstribal.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/uk_sportstribal.m3u" "${M3U8_STATIC_DIR}" "uk_sportstribal.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_adultiptv.m3u" "${M3U8_STATIC_DIR}" "us_adultiptv.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_adultiptv.m3u" "${M3U8_STATIC_DIR}" "us_adultiptv.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_adultswim.m3u" "${M3U8_STATIC_DIR}" "us_adultswim.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_adultswim.m3u" "${M3U8_STATIC_DIR}" "us_adultswim.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_bumblebee.m3u" "${M3U8_STATIC_DIR}" "us_bumblebee.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_bumblebee.m3u" "${M3U8_STATIC_DIR}" "us_bumblebee.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_distro.m3u" "${M3U8_STATIC_DIR}" "us_distro.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_distro.m3u" "${M3U8_STATIC_DIR}" "us_distro.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_filmon.m3u" "${M3U8_STATIC_DIR}" "us_filmon.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_filmon.m3u" "${M3U8_STATIC_DIR}" "us_filmon.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_fubo.m3u" "${M3U8_STATIC_DIR}" "us_fubo.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_fubo.m3u" "${M3U8_STATIC_DIR}" "us_fubo.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_glewedtv.m3u" "${M3U8_STATIC_DIR}" "us_glewedtv.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_glewedtv.m3u" "${M3U8_STATIC_DIR}" "us_glewedtv.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_imdbtv.m3u" "${M3U8_STATIC_DIR}" "us_imdbtv.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_imdbtv.m3u" "${M3U8_STATIC_DIR}" "us_imdbtv.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_klowdtv.m3u" "${M3U8_STATIC_DIR}" "us_klowdtv.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_klowdtv.m3u" "${M3U8_STATIC_DIR}" "us_klowdtv.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_localbtv.m3u "${M3U8_STATIC_DIR}" "us_localbtv.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_localbtv.m3u "${M3U8_STATIC_DIR}" "us_localbtv.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_pbs.m3u" "${M3U8_STATIC_DIR}" "us_pbs.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_pbs.m3u" "${M3U8_STATIC_DIR}" "us_pbs.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_plex.m3u" "${M3U8_STATIC_DIR}" "us_plex.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_plex.m3u" "${M3U8_STATIC_DIR}" "us_plex.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_pluto.m3u" "${M3U8_STATIC_DIR}" "us_pluto.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_pluto.m3u" "${M3U8_STATIC_DIR}" "us_pluto.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_redbox.m3u" "${M3U8_STATIC_DIR}" "us_redbox.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_redbox.m3u" "${M3U8_STATIC_DIR}" "us_redbox.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_redtraffic.m3u" "${M3U8_STATIC_DIR}" "us_redtraffic.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_redtraffic.m3u" "${M3U8_STATIC_DIR}" "us_redtraffic.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_roku.m3u" "${M3U8_STATIC_DIR}" "us_roku.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_roku.m3u" "${M3U8_STATIC_DIR}" "us_roku.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_samsung.m3u" "${M3U8_STATIC_DIR}" "us_samsung.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_samsung.m3u" "${M3U8_STATIC_DIR}" "us_samsung.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_ssh101.m3u" "${M3U8_STATIC_DIR}" "us_ssh101.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_ssh101.m3u" "${M3U8_STATIC_DIR}" "us_ssh101.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_stirr.m3u" "${M3U8_STATIC_DIR}" "us_stirr.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_stirr.m3u" "${M3U8_STATIC_DIR}" "us_stirr.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_tcl.m3u" "${M3U8_STATIC_DIR}" "us_tcl.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_tcl.m3u" "${M3U8_STATIC_DIR}" "us_tcl.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_tubi.m3u" "${M3U8_STATIC_DIR}" "us_tubi.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_tubi.m3u" "${M3U8_STATIC_DIR}" "us_tubi.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_vizio.m3u" "${M3U8_STATIC_DIR}" "us_vizio.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_vizio.m3u" "${M3U8_STATIC_DIR}" "us_vizio.m3u8"
+          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_xumo.m3u" "${M3U8_STATIC_DIR}" "us_xumo.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/us_xumo.m3u" "${M3U8_STATIC_DIR}" "us_xumo.m3u8"
+		  
       - name: Match EPG IDs to Static Files
         run: |
           echo "Command: './scripts/match_epgid_to_names.sh "${M3U8_STATIC_DIR}" "${M3U8_STATIC_DIR}"'"
