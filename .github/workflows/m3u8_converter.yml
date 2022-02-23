@@ -111,8 +111,9 @@ jobs:
           
       - name: Get other m3u8s to add
         run: |
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"
+	
+	echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"'"
+	./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"
           
 
           echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"'"
