@@ -128,18 +128,12 @@ jobs:
       - name: Get other m3u8s to add
         run: |
         
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/OFCVIPMovies2.m3u" "${M3U8_STATIC_DIR}" "vod2.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/OFCVIPMovies2.m3u" "${M3U8_STATIC_DIR}" "vod2.m3u8"
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/eng.m3u" "${M3U8_STATIC_DIR}" "eng.m3u8"
           
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/OFCVIPMovies.m3u" "${M3U8_STATIC_DIR}" "vod1.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/OFCVIPMovies.m3u" "${M3U8_STATIC_DIR}" "vod1.m3u8"
-
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/new/__%20VIP%20MOVIES%20__.m3u" "${M3U8_STATIC_DIR}" "vod3.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/IPTV-M3US/master/m3us/new/__%20VIP%20MOVIES%20__.m3u" "${M3U8_STATIC_DIR}" "vod3.m3u8"
-          
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/ustvgotom3u/main/ustvgo.m3u" "${M3U8_STATIC_DIR}" "ustvgo.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/bitsbb01/ustvgotom3u/main/ustvgo.m3u" "${M3U8_STATIC_DIR}" "ustvgo.m3u8"                                
-          
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/iptv/languages/undefined.m3u" "${M3U8_STATIC_DIR}" "undefined.m3u8"
+		  
       - name: Match EPG IDs to Static Files
         run: |
           echo "Command: './scripts/match_epgid_to_names.sh "${M3U8_STATIC_DIR}" "${M3U8_STATIC_DIR}"'"
@@ -156,52 +150,6 @@ jobs:
           ls -alt "${M3U8_STATIC_DIR2}"        
                
           
-          
-      - name: Get epg
-        run: |
-         
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/epg_ripper_ALL_SOURCES1.xml.gz" "./tests/epg/" "epg_ripper_ALL_SOURCES1.xml.gz"'"
-          ./scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/epg_ripper_ALL_SOURCES1.xml.gz" "./tests/epg/" "epg_ripper_ALL_SOURCES1.xml.gz"
-   
-   
-      - name: Get EPG from epgshare
-        run: |
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/" "${EPG_TEMP_DIR}" "epg_ripper_ALL_SOURCES1.xml.gz"'"
-          ./scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/" "${EPG_TEMP_DIR}" "epg_ripper_ALL_SOURCES1.xml.gz"
-          
-          ls -alt "${EPG_TEMP_DIR}" 
-          
-          
-      - name: Get the main all streams json
-        run: |
-        
-          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/api/channels.json" "./temp/all_streams_tmp/" "all-streams.json"'"
-          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/api/channels.json" "./temp/all_streams_tmp/" "all-streams.json"
-          
-    
-      ### PROCESS THE DATA ###
-      - name: Convert all_streams
-        run: |
-          echo "Command: 'ls -alt ./temp/all_streams_tmp/'"
-          ls -alt ./temp/all_streams_tmp/
-          echo "Command: 'ls -alt ${M3U8_DIR}'"
-          ls -alt ${M3U8_DIR}
-          echo "Command: 'python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "./temp/all_streams_tmp/" "${M3U8_DIR}"'"
-          python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "./temp/all_streams_tmp/" "${M3U8_DIR}"
-          echo "Command: 'ls -alt ./temp/all_streams_tmp/'"
-          ls -alt ./temp/all_streams_tmp/
-          echo "Command: 'ls -alt ${M3U8_DIR}'"
-          ls -alt ${M3U8_DIR}
-          
-      - name: Merge with Static All_Streams Files
-        run: |
-          ls -alt ${M3U8_DIR}
-          ls -alt ${M3U8_STATIC_DIR2}
-          echo "Command: './scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR2}"'"
-          ./scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR2}"
-          ls -alt ${M3U8_DIR}
-          ls -alt ${M3U8_STATIC_DIR2}
-                    
       - name: Add EPG URL to files
         run: |
           echo "Command: 'python ./scripts/add_epg_url_into_m3u8.py --epg_url "https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"'"
@@ -237,21 +185,6 @@ jobs:
           target: "./m3u8"
           flags: '-r'
           
-          
-      - name: Copy epg
-        uses: canastro/copy-file-action@master
-        with:
-          source: "./tests/epg/*"
-          target: "./epg"
-          flags: '-r'
-    
-          
-      - name: Copy json
-        uses: canastro/copy-file-action@master
-        with:
-          source: "./temp/iptvcat*"
-          target: "./json"
-          flags: '-r'
                   
           
       - name: Get current date
