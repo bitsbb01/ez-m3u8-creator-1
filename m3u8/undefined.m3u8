@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="",Unknown [100]
 https://cdn.alarab.com/h264/154431_480p.mp4/index-v1-a1.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="",#EXTGRP:Фильмы/Сериалы [95]

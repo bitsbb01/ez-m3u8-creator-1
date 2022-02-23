@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="Sport",Arena Sport 2 [80][offline]
 http://edge.iptvland.nl:8080/mousa/mousa/193426?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="Sport",Arena Sport 3 [100]

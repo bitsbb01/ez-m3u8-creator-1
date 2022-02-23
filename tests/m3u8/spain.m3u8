@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="",#0 [71][offline]
 http://sv.avat-iptv.com:2095/22314478/87223144/2345?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="",#0 [94][offline]

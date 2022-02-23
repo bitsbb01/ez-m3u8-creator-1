@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="",5AAB TV [99]
 http://158.69.124.9:1935/5aabtv/5aabtv/chunklist_w2029417072.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="",7Star TV [94]

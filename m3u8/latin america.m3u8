@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="(DE) 1te/2te/3te",BIS HD BR [100]
 http://portal.ramz123.xyz:8080/icaleia7/1FLxrHNvzy/79974?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="",BIS SD [85][offline]

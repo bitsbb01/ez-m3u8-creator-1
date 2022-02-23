@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="ATV2(src01).at" group-title="",ATV 2 [100]
 http://top-fast.xyz:8080/GhaithxHabash/8GWhYkB0zg/82849?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="ATV(src02).at" group-title="",ATV HD [100]

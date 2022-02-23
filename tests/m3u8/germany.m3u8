@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="SkyCinemaAction.de" group-title="Movies",- Sky Cinema Action HD [100]
 http://dream4k.co:2082/mminass770399/alvrdbib3s/51389?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="SkyCinemaComedy(src02).de" group-title="Comedy;Movies",- Sky Cinema Comedy HD [93][offline]

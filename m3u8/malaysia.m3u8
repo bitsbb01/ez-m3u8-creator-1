@@ -1,4 +1,4 @@
-#EXTM3U tvg-url="" url-tvg="" x-tvg-url=""
+#EXTM3U tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" url-tvg="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" x-tvg-url="https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz"
 #EXTINF:0 tvg-id="" group-title="",ABN SAT (1280×720), ABNsat [98]
 http://rtmp1.abnsat.com/hls/arabic.m3u8?checkedby:iptvcat.com
 #EXTINF:0 tvg-id="" group-title="",AE | Hawas TV, Hawas TV, HAWAS TV (1280×720) [99]
