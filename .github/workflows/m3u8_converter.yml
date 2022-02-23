@@ -1,11 +1,12 @@
-name: M3U8_ACTION
+name: M3U8_Creator
 
 on:
   workflow_dispatch:
-# Run 6 Hours after https://github.com/bitsbb01/iptvcat-scrapper
+  # Run 6 Hours after https://github.com/bitsbb01/iptvcat-scrapper
   # 12.10 UTC Time, 06.10 Central Time
+  # Changed to every 3hrs, due to including Youtube links and Pluto, so those links are always correct.
   schedule:
-    - cron: "10 12 * * *"
+    - cron: "0 0/3 * * *"
   push:
     branches:
     - master
@@ -13,19 +14,18 @@ on:
 
 jobs:
 
-  m3u8_action:
-    name: m3u8_action
+  Running_M3U8_Creator:
+    name: Running M3U8 Creator
     runs-on: "ubuntu-latest"
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Commit files
+      - name: Last Attempts
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           echo $(date) >> last_attempt.txt
-
           cat last_attempt.txt
           ls -ltr
           git status
@@ -33,27 +33,51 @@ jobs:
           git status
           git commit -m "cron: setting last attempt time stamp" -a
           git status
-          git push
+#          git push
+          
+      - name: Checkout code
+        uses: actions/checkout@v1
 
-      - name: Delete Old Files
+      - name: Check *.M3u8 File existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "./CompiledallStreams.m3u, ./epg/epg_ripper_ALL_SOURCES1.xml.gz"
+
+      - uses: actions/checkout@v2
+      - name: If *.M3U8 Files exists - Then Cleanup
+        if: steps.check_files.outputs.files_exists == 'true'
+        # Only runs if all of the files exists
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git rm ./tests/m3u8/*.m3u8
           git rm ./m3u8/*.m3u8
-                       
-      - name: commit deleted old files
-        uses: zwaldowski/git-commit-action@v1
-        with:
-             commit_message:  "deleted old files by bot"
-             working_directory: .
-           
-      - name: Push changes for old files
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.scrapper_token }}
-          branch: ${{ github.ref }}
-
+          git rm ./*.m3u8
+          git rm ./tests/epg/*.gz
+          git rm ./epg/*.gz
+          git rm ./temp/m3u8_static/*.m3u8
+          git rm ./temp/all_streams_tmp/*.json
+          git status
+          git push          
+          git commit -m "cron: Updated by Bot" -a
+         
+#      - name: If *.M3U8 Files exists - Then Cleanup 2
+#        if: steps.check_files.outputs.files_exists == 'true'
+#        # Only runs if all of the files exists
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.scrapper_token }}
+#          branch: ${{ github.ref }}
+#        
+#      - name: If *.M3U8 Files exists - Then Cleanup 3
+#        if: steps.check_files.outputs.files_exists == 'true'
+#        # Only runs if all of the files exists
+#        uses: zwaldowski/git-commit-action@v1
+#        with:
+#             commit_message: Updated by Bot - ${{ steps.date.outputs.date }}
+#             working_directory: .
+        
       ### SETUP THE ENVIRONMENT
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -63,16 +87,15 @@ jobs:
       - name: Setup Environment
         # e.g. create work dirst, store in env variables ... https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions
         run: |
-          echo "IPTVCAT_DATE=$(date -d "13:00" '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "IPTVCAT_DATE_YESTERDAY=$(date -d "yesterday 13:00" '+%Y-%m-%d')" >> $GITHUB_ENV
-          echo "IPTVCAT_DOWNLOAD_DIR=${{ github.workspace }}/temp/iptvcat" >> $GITHUB_ENV
+          echo "IPTVCAT_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+          echo "IPTVCAT_DATE_YESTERDAY=$(date -d "yesterday 7:00" '+%Y-%m-%d')" >> $GITHUB_ENV
+          echo "IPTVCAT_DOWNLOAD_DIR=./temp/iptvcat" >> $GITHUB_ENV
           echo "M3U8_DIR=./tests/m3u8/" >> $GITHUB_ENV
           echo "EPG_TEMP_DIR=./tests/epg/" >> $GITHUB_ENV
-          echo "M3U8_STATIC_DIR=${{ github.workspace }}/temp/m3u8_static" >> $GITHUB_ENV
-
+          echo "M3U8_STATIC_DIR=./temp/m3u8_static/" >> $GITHUB_ENV
+          echo "M3U8_STATIC_DIR2=./temp/m3u8_static/all/" >> $GITHUB_ENV
           # Update pythonpath used for our scripts
           echo "PYTHONPATH=$PYTHONPATH:${{ github.workspace }}" >> $GITHUB_ENV
-
       - name: Setup Dirs
         run: |
           echo "IPTVCAT_DATE: '${IPTVCAT_DATE}'"
@@ -81,16 +104,16 @@ jobs:
           echo "M3U8_DIR: '${M3U8_DIR}'"
           echo "EPG_TEMP_DIR: '${EPG_TEMP_DIR}'"
           echo "M3U8_STATIC_DIR: '${M3U8_STATIC_DIR}'"
-
           echo "Command: 'mkdir -p ${IPTVCAT_DOWNLOAD_DIR}'"
           mkdir -p ${IPTVCAT_DOWNLOAD_DIR}
           echo "Command: 'mkdir -p ${M3U8_DIR}'"
           mkdir -p ${M3U8_DIR}
           echo "Command: 'mkdir -p ${EPG_TEMP_DIR}'"
           mkdir -p ${EPG_TEMP_DIR}
+          echo "Command: 'mkdir -p ${M3U8_STATIC_DIR2}'"
+          mkdir -p ${M3U8_STATIC_DIR2}
           echo "Command: 'mkdir -p ${M3U8_STATIC_DIR}'"
           mkdir -p ${M3U8_STATIC_DIR}
-
           echo "Command: 'ls -alt ${IPTVCAT_DOWNLOAD_DIR}'"
           ls -alt ${IPTVCAT_DOWNLOAD_DIR}
           echo "Command: 'ls -alt ${M3U8_DIR}'"
@@ -99,80 +122,104 @@ jobs:
           ls -alt ${EPG_TEMP_DIR}
           echo "Command: 'ls -alt ${M3U8_STATIC_DIR}'"
           ls -alt ${M3U8_STATIC_DIR}
-
-      ### DOWNLOAD REQUIRED DATA ###
-      - name: Get IPTVCat Release
+          echo "Command: 'ls -alt ${M3U8_STATIC_DIR2}'"
+          ls -alt ${M3U8_STATIC_DIR2}
+          
+      - name: Get other m3u8s to add
         run: |
-          echo "Command: './scripts/iptvcat/get_iptvcat_scraper_release.sh "${IPTVCAT_DOWNLOAD_DIR}" "${IPTVCAT_DATE}" "${IPTVCAT_DATE_YESTERDAY}"'"
-          ./scripts/iptvcat/get_iptvcat_scraper_release.sh "${IPTVCAT_DOWNLOAD_DIR}" "${IPTVCAT_DATE}" "${IPTVCAT_DATE_YESTERDAY}"
-
-      - name: Get EPG from M3U4U
+        
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/Sphinxroot/IPTVM3U/master/Dash%20Radio.m3u" "${M3U8_STATIC_DIR}" "dashradio.m3u8"'"
+          ./scripts/download_file_allow_failiure.sh "https://raw.githubusercontent.com/Sphinxroot/IPTVM3U/master/Dash%20Radio.m3u" "${M3U8_STATIC_DIR}" "dashradio.m3u8"
+                                                  
+          
+      - name: Match EPG IDs to Static Files
         run: |
-          echo "Command: './scripts/download_file_allow_failiure.sh "${{ secrets.M3U4U_EPG_URL_XML_GZ }}" "${EPG_TEMP_DIR}" "${{ secrets.M3U4U_EPG_FILE_NAME_XML_GZ }}"'"
-          ./scripts/download_file_allow_failiure.sh "${{ secrets.M3U4U_EPG_URL_XML_GZ }}" "${EPG_TEMP_DIR}" "${{ secrets.M3U4U_EPG_FILE_NAME_XML_GZ }}"
-
-      - name: Get Static Files from Dropbox
+          echo "Command: './scripts/match_epgid_to_names.sh "${M3U8_STATIC_DIR}" "${M3U8_STATIC_DIR}"'"
+          ./scripts/match_epgid_to_names.sh "${M3U8_STATIC_DIR}" "${M3U8_STATIC_DIR}"          
+          
+          ls -alt "${M3U8_STATIC_DIR}"        
+ 
+      - name: Merge Files
         run: |
-          echo "Command: './scripts/download_file_allow_failiure.sh "${{ secrets.DROPBOX_STATIC_M3U8_INDONESIA }}" "${M3U8_STATIC_DIR}" "indonesia.m3u8"'"
-          ./scripts/download_file_allow_failiure.sh "${{ secrets.DROPBOX_STATIC_M3U8_INDONESIA }}" "${M3U8_STATIC_DIR}" "indonesia.m3u8"
-
-          ls -alt "${M3U8_STATIC_DIR}"
-
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          cat ./temp/m3u8_static/*.m3u8 > ./temp/m3u8_static/all/all-streams.m3u8       
+          
+          ls -alt "${M3U8_STATIC_DIR2}"        
+               
+          
+          
+      - name: Get epg
+        run: |
+         
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/epg_ripper_ALL_SOURCES1.xml.gz" "./tests/epg/" "epg_ripper_ALL_SOURCES1.xml.gz"'"
+          ./scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/epg_ripper_ALL_SOURCES1.xml.gz" "./tests/epg/" "epg_ripper_ALL_SOURCES1.xml.gz"
+   
+   
+      - name: Get EPG from epgshare
+        run: |
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/" "${EPG_TEMP_DIR}" "epg_ripper_ALL_SOURCES1.xml.gz"'"
+          ./scripts/download_file_allow_failiure.sh "https://github.com/epgshare01/share01/raw/master/" "${EPG_TEMP_DIR}" "epg_ripper_ALL_SOURCES1.xml.gz"
+          
+          ls -alt "${EPG_TEMP_DIR}" 
+          
+          
+      - name: Get the main all streams json
+        run: |
+        
+          echo "Command: './scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/api/channels.json" "./temp/all_streams_tmp/" "all-streams.json"'"
+          ./scripts/download_file_allow_failiure.sh "https://iptv-org.github.io/api/channels.json" "./temp/all_streams_tmp/" "all-streams.json"
+          
+    
       ### PROCESS THE DATA ###
-      - name: Convert IPTVCat (JSON to m3u8)
+      - name: Convert all_streams
         run: |
-          echo "Command: 'ls -alt ${IPTVCAT_DOWNLOAD_DIR}'"
-          ls -alt ${IPTVCAT_DOWNLOAD_DIR}
+          echo "Command: 'ls -alt ./temp/all_streams_tmp/'"
+          ls -alt ./temp/all_streams_tmp/
           echo "Command: 'ls -alt ${M3U8_DIR}'"
           ls -alt ${M3U8_DIR}
-
-          echo "Command: 'python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "${M3U8_DIR}"'"
-          python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "${IPTVCAT_DOWNLOAD_DIR}" "${M3U8_DIR}"
-
-          echo "Command: 'ls -alt ${IPTVCAT_DOWNLOAD_DIR}'"
-          ls -alt ${IPTVCAT_DOWNLOAD_DIR}
+          echo "Command: 'python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "./temp/all_streams_tmp/" "${M3U8_DIR}"'"
+          python ./scripts/iptvcat/convert_iptvcat_scraper_files.py "./temp/all_streams_tmp/" "${M3U8_DIR}"
+          echo "Command: 'ls -alt ./temp/all_streams_tmp/'"
+          ls -alt ./temp/all_streams_tmp/
           echo "Command: 'ls -alt ${M3U8_DIR}'"
           ls -alt ${M3U8_DIR}
-
-      - name: Merge with Static Files
+          
+      - name: Merge with Static All_Streams Files
         run: |
           ls -alt ${M3U8_DIR}
-          ls -alt ${M3U8_STATIC_DIR}
-
-          echo "Command: './scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR}"'"
-          ./scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR}"
-
+          ls -alt ${M3U8_STATIC_DIR2}
+          echo "Command: './scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR2}"'"
+          ./scripts/merge_m3u8_files_in_dirs.sh "${M3U8_DIR}" "${M3U8_STATIC_DIR2}"
           ls -alt ${M3U8_DIR}
-          ls -alt ${M3U8_STATIC_DIR}
-
-      - name: Add Channel Categories
+          ls -alt ${M3U8_STATIC_DIR2}
+                    
+      - name: Add EPG URL to files
+        run: |
+          echo "Command: 'python ./scripts/add_epg_url_into_m3u8.py --epg_url "https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"'"
+          python ./scripts/add_epg_url_into_m3u8.py --epg_url "https://github.com/bitsbb01/m3u8_creator/raw/main/epg/epg_ripper_ALL_SOURCES1.xml.gz" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"
+      - name: Add Channel To Main Categories
         run: |
           echo "Command: 'python ./scripts/import_categories_into_m3u8.py --category_file "./ez_m3u8_creator/categories/main.json" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"'"
           python ./scripts/import_categories_into_m3u8.py --category_file "./ez_m3u8_creator/categories/main.json" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"
-
+ 
       - name: Match EPG IDs
         run: |
           echo "Command: './scripts/match_epgid_to_names.sh "${M3U8_DIR}" "${M3U8_DIR}"'"
           ./scripts/match_epgid_to_names.sh "${M3U8_DIR}" "${M3U8_DIR}"
-
-      - name: Add EPG URL to files
-        run: |
-          echo "Command: 'python ./scripts/add_epg_url_into_m3u8.py --epg_url "${{ secrets.DROPBOX_EPG_URL_XML_GZ }}" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"'"
-          python ./scripts/add_epg_url_into_m3u8.py --epg_url "${{ secrets.DROPBOX_EPG_URL_XML_GZ }}" --m3u8_in_dir "${M3U8_DIR}" --m3u8_out_dir "${M3U8_DIR}"
-
-#      ### FILE UPLOADS ###
-#      - name: Upload EPG to dropbox
-#        run: |
-#          echo "Command: './scripts/upload_to_dropbox.sh "${EPG_TEMP_DIR}" "EPG" "********"'"
-#          ./scripts/upload_to_dropbox.sh "${EPG_TEMP_DIR}" "EPG" "${{ secrets.DROPBOX_UPLOAD_TOKEN }}"
-#
-#      - name: Upload m3u8 files to Dropbox
-#        run: |
-#          echo "Command: './scripts/upload_to_dropbox.sh "${M3U8_DIR}" "IPTV" "********"'"
-#          ./scripts/upload_to_dropbox.sh "${M3U8_DIR}" "IPTV" "${{ secrets.DROPBOX_UPLOAD_TOKEN }}"
-
-
-
+                           
+      - name: Push all changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.scrapper_token }}
+          branch: ${{ github.ref }} 
+             
+      - name: Copy Static m3u8s
+        uses: canastro/copy-file-action@master
+        with:
+          source: "./temp/m3u8_static/*.m3u8"
+          target: "./m3u8"
+          flags: '-r'
           
       ### This is where the copy function should work, to copy the m3u8 & epg to the data folder ###
       - name: Copy m3u8
@@ -186,20 +233,52 @@ jobs:
       - name: Copy epg
         uses: canastro/copy-file-action@master
         with:
-          source: "./tests/epg/."
+          source: "./tests/epg/*"
           target: "./epg"
           flags: '-r'
     
+          
+      - name: Copy json
+        uses: canastro/copy-file-action@master
+        with:
+          source: "./temp/iptvcat*"
+          target: "./json"
+          flags: '-r'
+                  
+          
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%d-%m-%Y')"
-                    
+        run: echo "::set-output name=date::$(date '+%Y-%m-%d')"
+
+
+      - name: Merge Files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          ls -1 ./m3u8/*.m3u8 > ./allstreams.txt
+          cat ./m3u8/*.m3u8 > ./Compiled-all-Streams.m3u8
+          cat ./m3u8/*.m3u8 > ./CompiledallStreams.m3u
+                                    
+      - name: create workflow artifact #this is created, so if theres an error, you can look back at previous yml
+        uses: actions/upload-artifact@v2
+        with:
+         name: workflow_${{ steps.date.outputs.date }}
+         path: .github/workflows/m3u8_converter.yml
+       
+       
+                           
+      - name: Push all changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.scrapper_token }}
+          branch: ${{ github.ref }} 
+          
       - name: Commit All Files
         uses: zwaldowski/git-commit-action@v1
         with:
              commit_message: Updated by Bot - ${{ steps.date.outputs.date }}
              working_directory: .
-           
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
